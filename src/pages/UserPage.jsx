@@ -1,0 +1,39 @@
+import {
+    UserSideBar,
+    UserSwiperCard,
+    FullScreenLoader,
+    UserMobileNav,
+    UserMobileFooter,
+    UserBtns
+} from '../components';
+import useAuth from "../hooks/useAuth";
+
+const UserPage = () => {
+    const { user, isLoading } = useAuth()
+
+    return (
+        <>
+        {isLoading ? <FullScreenLoader/>
+        : <div className='xlContainer'>
+            <div className="pageGradientBg h-screen w-full flex flex-col md:flex-row justify-center
+            md:justify-between items-center relative">
+                <div className="sideBarContainer md:block hidden">
+                    <UserSideBar />
+                </div>
+                <div className='md:hidden block absolute top-0 w-screen'>
+                    <UserMobileNav/>
+                </div>
+                <UserSwiperCard />
+                <div className="sideBarContainer md:block hidden bg-[#FF929D]">
+                    <UserBtns />
+                </div>
+                <div className='md:hidden block'>
+                    <UserMobileFooter/>
+                </div>
+            </div>
+        </div>}
+        </>
+    )
+}
+
+export default UserPage;

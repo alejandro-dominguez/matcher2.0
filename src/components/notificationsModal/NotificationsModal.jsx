@@ -1,8 +1,8 @@
-import profile from "../../assets/horacio.png";
 import logo from "../../assets/logoLoader.svg";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MatchesAndChats } from "..";
+import { MatchesAndChats } from "../";
+import useProfiles from "../../hooks/useProfiles";
 
 const NotificationsModal = ({
     modalState,
@@ -13,6 +13,8 @@ const NotificationsModal = ({
     setMessagesState
 }) => {
     const [activeClass, SetActiveClass] = useState(false)
+    const { userProfile } = useProfiles()
+    const loggedUser = userProfile[0]
 
     const handleClose = () => {
         SetActiveClass(true)
@@ -35,9 +37,10 @@ const NotificationsModal = ({
                     <div className="flex items-center justify-around w-full gap-20">
                         <Link to="/user">
                             <div className="grid place-items-center transition-colors hover:text-[#ed3434]">
-                                <div className="p-[0.225rem] bg-[#ed3434] rounded-full">
-                                    <div style={{backgroundImage: `url(${profile})`}} className='h-14 w-14
-                                    bg-cover bg-center bg-no-repeat rounded-full imgShadow'/>
+                                <div className="p-[0.2rem] bg-[#ed3434] rounded-full">
+                                    {loggedUser ? <div style={{backgroundImage: `url(${loggedUser.img1})`}}
+                                    className='h-14 w-14 bg-cover bg-center bg-no-repeat rounded-full imgShadow'/>
+                                    : null}
                                 </div>
                                 <p className='font-semibold mt-[0.1rem]'>
                                     Mi perfil

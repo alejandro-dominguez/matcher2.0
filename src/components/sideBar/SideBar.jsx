@@ -1,18 +1,30 @@
 import logo from '../../assets/logoNavBar.svg';
-import profile from '../../assets/horacio.png';
 import { useState } from 'react';
 import { FaHeart, FaCommentAlt, FaSignOutAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { NotificationsModal } from '../';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import shortenText from './../../utils/shortenText';
+import useProfiles from '../../hooks/useProfiles';
 
 const SideBar = () => {
     const [showModal, setShowModal] = useState(false)
     const [showMessages, setShowMessages] = useState(false)
     const [showMatches, setShowMatches] = useState(false)
     const { logout, isLoading } = useAuth()
+    const { userProfile } = useProfiles()
+    const loggedUser = userProfile[0]
     const navigate = useNavigate()
+    const userFullName = loggedUser.username
+    
+    const getUserFirstName = () => {
+        const splitName = userFullName.split(" ")
+        const FirstName = splitName[0]
+        return FirstName
+    }
+
+    const userFirstName = getUserFirstName()
 
     const handleMatches = () => {
         setShowModal(true)
@@ -40,11 +52,14 @@ const SideBar = () => {
                 </div>
                 <Link to="/user">
                     <div className="sideBarBox flex flex-col items-center justify-center mt-10">
-                        <div className="p-[0.3rem] bg-[#ed3434] transition-colors rounded-full">
-                            <div style={{backgroundImage: `url(${profile})`}} className='h-28 w-28 bg-cover
-                            bg-center bg-no-repeat rounded-full'/>
+                        <div className="p-[0.25rem] bg-[#ed3434] transition-colors rounded-full">
+                            {loggedUser ? <div style={{backgroundImage: `url(${loggedUser.img1})`}}
+                            className='h-28 w-28 bg-cover bg-center bg-no-repeat rounded-full'/>
+                            : null}
                         </div>
-                        <p className='transition-colors font-semibold text-xl mt-2 textShadowSm'>Cinthia</p>
+                        <p className='transition-colors font-semibold text-xl mt-2 textShadowSmRed'>
+                            {loggedUser ? `${shortenText(userFirstName, 10)}` : null}
+                        </p>
                     </div>
                 </Link>
             </div>

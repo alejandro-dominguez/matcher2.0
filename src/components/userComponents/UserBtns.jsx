@@ -12,7 +12,7 @@ const UserBtns = () => {
     }
 
     return (
-        <div className='flex flex-col items-center justify-between py-10 h-screen gap-2'>
+        <div className='flex flex-col items-center justify-center h-screen gap-64'>
             <div className='flex flex-col items-start justify-center gap-8'>
                 <div className="text-[#FFEAEA] grid place-items-center rounded-full py-3 gap-1 w-[4.6rem]
                 cursor-pointer btnFeedGradient transition-transform hover:scale-[1.025]"

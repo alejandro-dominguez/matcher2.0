@@ -1,5 +1,5 @@
 import { FaHeart, FaCommentAlt, FaHeartBroken } from 'react-icons/fa';
-import { NotificationsModal } from '..';
+import { NotificationsModal } from '../';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

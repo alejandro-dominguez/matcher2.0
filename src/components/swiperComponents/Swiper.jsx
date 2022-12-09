@@ -1,15 +1,23 @@
 import { useState } from 'react';
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 import { FaUser } from 'react-icons/fa';
-import { SwiperDescription } from '..';
+import { SwiperDescription } from '../';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { IoHeartCircleOutline } from 'react-icons/io5'; 
+import shortenText from './../../utils/shortenText';
 
-const Swiper = ({ swiperSlides, setCardState, setActiveClassState }) => {
+const Swiper = ({
+    profile,
+    swiperSlides,
+    setCardState,
+    setActiveClassState,
+    setFadeState
+}) => {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [sliderBtnPressed, setSliderBtnPressed] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [showUi, setShowUi] = useState(true)
+    const name = shortenText(profile.username, 16)
 
     const prevSlide = () => {
         const firstSlide = currentIndex === 0
@@ -30,11 +38,20 @@ const Swiper = ({ swiperSlides, setCardState, setActiveClassState }) => {
         setShowUi(false)
     }
 
-    const handleClose = () => {
+    const handleDislike = () => {
         setActiveClassState(true)
+        setFadeState(false)
         setTimeout(() => {
             setCardState(false)
-        }, 1000)
+        }, 500)
+    }
+
+    const handleLike = () => {
+        setActiveClassState(true)
+        setFadeState(true)
+        setTimeout(() => {
+            setCardState(false)
+        }, 500)
     }
     
     return (
@@ -56,7 +73,7 @@ const Swiper = ({ swiperSlides, setCardState, setActiveClassState }) => {
         bg-no-repeat absolute top-0 left-0 h-full w-full rounded-3xl" />
         {showUi ?
         <div className="absolute bottom-40 md:bottom-44 left-1/2 -translate-x-1/2 justify-between items-center
-        gap-48 md:gap-60 flex">
+        gap-48 md:gap-60 flex z-30">
             <HiOutlineChevronLeft size={40} className="cursor-pointer text-white/70 hover:text-white
             transition-colors noSelect" onClick={() => prevSlide()} />
             <HiOutlineChevronRight size={40} className="cursor-pointer text-white/70 hover:text-white
@@ -64,20 +81,21 @@ const Swiper = ({ swiperSlides, setCardState, setActiveClassState }) => {
         </div>
         : null}
         {!sliderBtnPressed ? (
-            (<div className="absolute top-7 left-24 md:left-28 -translate-x-1/2 text-white">
-                <div className="swiperInfoContainer w-full flex flex-col items-start gap-[0.15rem]
-                md:gap-1 noSelect">
-                    <h1 className='textShadow font-extrabold text-xl md:text-2xl'>Ayelen Vargas</h1>
-                    <h3 className='textShadow font-extrabold text-lg md:text-xl'>24 años</h3>
+            (<div className="absolute w-full h-full flex flex-col items-start justify-start p-5 text-white">
+                <div className="swiperInfoContainer w-full flex flex-col items-start gap-[0.15rem] md:gap-1
+                noSelect md:mt-1">
+                    <h1 className='textShadow font-extrabold text-xl md:text-2xl'>{name}</h1>
+                    <h3 className='textShadow font-extrabold text-lg md:text-xl'>{`${profile.age} años`}</h3>
                 </div>
                 <button type='button' className='text-[#ed3434] textShadowSm font-bold p-[0.45rem]
-                absolute top-1 rounded-full gradientBg shadow-md shadow-black/10 -right-24
+                absolute top-[1.6rem] rounded-full gradientBg shadow-md shadow-black/10 right-4
                 btnTransition btnShadow grid place-items-center md:hidden' onClick={() => handleSetShowModal()}>
                     <FaUser size={12} className="block"/>
                 </button>
             </div>))
         : null}
         <SwiperDescription
+            profile={profile}
             modalState={showModal}
             setModalState={setShowModal}
             setUiState={setShowUi}
@@ -87,11 +105,11 @@ const Swiper = ({ swiperSlides, setCardState, setActiveClassState }) => {
             <div className="flex gap-20 md:gap-32 justify-center items-center">
                 <button type='button' className='iconShadow text-[#FFEAEA] hover:text-[#1F9AFF]
                 hover:scale-110 transition-all duration-200 ease-linear noSelect'>
-                    <RiCloseCircleLine size={80} onClick={() => handleClose()} />
+                    <RiCloseCircleLine size={80} onClick={() => handleDislike()} />
                 </button>
                 <button type='button' className='iconShadow text-[#ed3434] hover:text-[#72E52D]
                 hover:scale-110 transition-all duration-200 ease-linear noSelect'>
-                    <IoHeartCircleOutline size={80} onClick={() => handleClose()} />
+                    <IoHeartCircleOutline size={80} onClick={() => handleLike()} />
                 </button>
             </div>
         </div>

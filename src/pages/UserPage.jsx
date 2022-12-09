@@ -7,13 +7,15 @@ import {
     UserBtns
 } from '../components';
 import useAuth from "../hooks/useAuth";
+import useProfiles from '../hooks/useProfiles';
 
 const UserPage = () => {
-    const { user, isLoading } = useAuth()
+    const { isLoading } = useAuth()
+    const { loadingUser } = useProfiles()
 
     return (
         <>
-        {isLoading ? <FullScreenLoader/>
+        {isLoading || loadingUser ? <FullScreenLoader/>
         : <div className='xlContainer'>
             <div className="pageGradientBg h-screen w-full flex flex-col md:flex-row justify-center
             md:justify-between items-center relative">
@@ -21,14 +23,16 @@ const UserPage = () => {
                     <UserSideBar />
                 </div>
                 <div className='md:hidden block absolute top-0 w-screen'>
-                    <UserMobileNav/>
+                    <UserMobileNav />
                 </div>
-                <UserSwiperCard />
+                <main className="swiperContainer flex flex-col items-center justify-center relative">
+                    <UserSwiperCard />
+                </main>
                 <div className="sideBarContainer md:block hidden bg-[#FF929D]">
                     <UserBtns />
                 </div>
                 <div className='md:hidden block'>
-                    <UserMobileFooter/>
+                    <UserMobileFooter />
                 </div>
             </div>
         </div>}

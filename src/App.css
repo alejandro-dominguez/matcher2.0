@@ -62,7 +62,7 @@ textarea {
 	}
 
 	.newUserFormContainer2 {
-		@apply flex flex-col items-start w-1/2 gap-0 pl-8 pb-48
+		@apply flex flex-col items-start w-1/2 gap-4 pl-8
 	}
 
 	.sideBarContainer {
@@ -111,10 +111,6 @@ textarea {
 		@apply flex flex-col justify-center items-center gap-4
 	}
 
-	.newUserFormImages {
-		@apply flex gap-3 mt-2
-	}
-
 	.newUserFormDesc {
 		@apply flex flex-col items-start justify-center mt-7
 	}
@@ -153,7 +149,7 @@ textarea {
 	}
 
 	.swiperCard {
-		@apply flex flex-col items-center justify-center gap-4 mb-[0.3rem] md:mb-0 absolute
+		@apply flex flex-col items-center justify-center gap-4 mb-[0.3rem] md:mb-0 absolute z-10
 	}
 
 	.sliderCounter {
@@ -166,7 +162,7 @@ textarea {
 
 	.notificationsModal {
 		@apply h-full bg-[#FFEAEA] w-1/4 rounded-r-2xl shadow-lg fixed top-0 left-0 flex flex-col
-		items-center justify-start z-10
+		items-center justify-start z-50
 	}
 	
 	.descriptionModal {
@@ -187,8 +183,8 @@ textarea {
 	}
 
 	.editModal {
-		@apply w-[20.25rem] h-[24.25rem] md:h-[30rem] bg-[#FFEAEA] rounded-2xl absolute flex flex-col
-		items-center justify-center z-50
+		@apply w-[18.5rem] md:w-[20.25rem] h-[24.25rem] md:h-[30rem] bg-[#FFEAEA] rounded-2xl absolute
+		flex flex-col items-center justify-center z-50
 	}
 
 	/*** buttons ***/
@@ -276,6 +272,10 @@ textarea {
 		text-shadow: 0.075rem 0.075rem 0.01rem rgb(0, 0, 0, 0.15);
 	}
 
+	.textShadowSmRed {
+		text-shadow: 0.075rem 0.075rem 0.01rem rgb(237, 52, 52, 0.5);
+	}
+
 	.iconShadow {
 		filter: drop-shadow(0.075rem 0.075rem 0.15rem rgb(0, 0, 0, 0.5));
 	}
@@ -359,17 +359,12 @@ textarea {
 			@apply w-full gap-1 pl-0 mt-3 mb-12 items-center pb-0
 		}
 
-		.newUserFormContainer2 label, .newUserFormContainer2 p,
-		.newUserFormContainer2 small, .newUserFormContainer2 textarea {
-			@apply text-[0.8rem]
-		}
-
 		.newUserFormContainer2 input {
-			@apply text-xs p-[0.35rem]
+			@apply mb-1
 		}
 
-		.newUserFormContainer2 textarea {
-			@apply h-16
+		.newUserFormContainer2 p, .newUserFormContainer2 small {
+			@apply text-[0.8rem]
 		}
 
 		.newUserFormData {
@@ -384,20 +379,16 @@ textarea {
 			@apply -mt-4
 		}
 
-		.newUserFormImages label {
-			@apply w-16
-		}
-
 		.newUserFormDesc {
 			@apply mt-0
 		}
 
 		.btnNewUserFormClose {
-			@apply top-4 right-3
+			@apply top-2 right-3
 		}
 
 		.btnSubmit {
-			@apply bottom-4
+			@apply bottom-2
 		}
 	}
 
@@ -508,16 +499,22 @@ textarea {
 		animation: fadeOutLeft 250ms linear forwards;
 	}
 
-	.fadeInCard {
-		animation: fadeInCard 250ms linear forwards;
+	.fadeOutRightCard {
+		transform-origin: bottom left;
+		animation: fadeOutRightCard 500ms linear forwards;
 	}
 
-	.fadeInCard.active {
-		animation: fadeOutCard 250ms linear forwards;
+	.fadeOutLeftCard {
+		transform-origin: bottom right;
+		animation: fadeOutLeftCard 500ms linear forwards;
+	}
+
+	.fadeInOpacity {
+		animation: fadeInOpacity 3s linear forwards;
 	}
 
 	.swiperInfoContainer {
-		animation: fadeOpacity 1.5s linear forwards;
+		animation: fadeOpacity 2s linear forwards;
 	}
 
 	.loadingLogo {
@@ -576,11 +573,38 @@ textarea {
 		0% {
 			opacity: 1;
 		}
+		25% {
+			opacity: 1;
+		}
+		37.5%{
+			opacity: 1;
+		}
 		50% {
-			opacity: 0.85;
+			opacity: 0.8;
+		}
+		62.5%{
+			opacity: 0.7;
+		}
+		75% {
+			opacity: 0.6;
 		}
 		100% {
-			opacity: 0.7;
+			opacity: 0.5;
+		}
+	}
+
+	@keyframes fadeInOpacity { 
+		0% {
+			opacity: 0;
+		}
+		50% {
+			opacity: 0;
+		}
+		75% {
+			opacity: 0.5;
+		}
+		100% {
+			opacity: 1;
 		}
 	}
 	
@@ -614,27 +638,41 @@ textarea {
 		}
 	}
 
-	@keyframes fadeInCard {
+	@keyframes fadeOutRightCard {
 		0% {
-			opacity: 0;
+			opacity: 1;
+			transform: rotate(0) translate(0);
 		}
-		50% {
-			opacity: 0.5;
+		33.3% {
+			opacity: 0.75;
+			transform: rotate(5deg) translate(10px);
+		}
+		66.6% {
+			opacity: 0.35;
+			transform: rotate(10deg) translate(20px);
 		}
 		100% {
-			opacity: 1;
+			opacity: 0;
+			transform: rotate(15deg) translate(30px);
 		}
 	}
 
-	@keyframes fadeOutCard {
+	@keyframes fadeOutLeftCard {
 		0% {
 			opacity: 1;
+			transform: rotate(0) translate(0);
 		}
-		50% {
-			opacity: 0.25;
+		33.3% {
+			opacity: 0.75;
+			transform: rotate(-5deg) translate(-10px);
+		}
+		66.6% {
+			opacity: 0.35;
+			transform: rotate(-10deg) translate(-20px);
 		}
 		100% {
 			opacity: 0;
+			transform: rotate(-15deg) translate(-30px);
 		}
 	}
 }

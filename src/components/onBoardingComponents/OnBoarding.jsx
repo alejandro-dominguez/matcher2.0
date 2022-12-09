@@ -1,6 +1,9 @@
 import { FaTimesCircle } from 'react-icons/fa';
 import { useState } from 'react';
 import { OnBoardingSuccess } from '../';
+import { serverTimestamp, setDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase/config';
+import useAuth from '../../hooks/useAuth';
 
 const OnBoarding = ({ modalState, setModalState }) => {
     const [activeClass, SetActiveClass] = useState(false)
@@ -11,11 +14,12 @@ const OnBoarding = ({ modalState, setModalState }) => {
         gender: "",
         genderInterest: "",
         description: "",
+        img1: "",
+        img2: "",
+        img3: "",
+        img4: ""
     })
-    const [img1, setImg1] = useState([])
-    const [img2, setImg2] = useState([])
-    const [img3, setImg3] = useState([])
-    const [img4, setImg4] = useState([])
+    const { user } = useAuth()
 
     const getData = (e) => {
             setFormData(
@@ -23,33 +27,24 @@ const OnBoarding = ({ modalState, setModalState }) => {
             )
     }
 
-    const handleImg1 = (e) => {
-        const target = e.target
-        const file = (target.files)[0]
-        setImg1(file)
-    }
-
-    const handleImg2 = (e) => {
-        const target = e.target
-        const file = (target.files)[0]
-        setImg2(file)
-    }
-
-    const handleImg3 = (e) => {
-        const target = e.target
-        const file = (target.files)[0]
-        setImg3(file)
-    }
-
-    const handleImg4 = (e) => {
-        const target = e.target
-        const file = (target.files)[0]
-        setImg4(file)
-    }
-
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(formData, img1, img2, img3, img4)
+        const updateUserProfile = () => {
+            setDoc(doc(db, "users", user.uid), {
+                id: user.uid,
+                username: formData.username,
+                age: formData.age,
+                gender: formData.gender,
+                genderInterest: formData.genderInterest,
+                description: formData.description,
+                img1: formData.img1,
+                img2: formData.img2,
+                img3: formData.img3,
+                img4: formData.img4,
+                timeStamp: serverTimestamp()
+            })
+        }
+        updateUserProfile()
         setShowModalSuccess(true)
         e.target.reset()
     }
@@ -74,7 +69,7 @@ const OnBoarding = ({ modalState, setModalState }) => {
             : "formModal formModalXl fadeInModal"}>
                 <button type='button' className='btnNewUserFormClose absolute text-[#2346e3] iconShadowSm
                 transition-all hover:scale-105' onClick={() => handleClose()}>
-                    <FaTimesCircle className="text-[1.75rem] md:text-[2.5rem]" />
+                    <FaTimesCircle className="text-[1.5rem] md:text-[2.5rem]" />
                 </button>
                 <form onSubmit={handleSubmit} className="newUserForm">
                     <div className='newUserFormContainer1'>
@@ -83,7 +78,7 @@ const OnBoarding = ({ modalState, setModalState }) => {
                                 <label htmlFor="name" className='text-sm font-bold text-[#ed3434]'>
                                     Nombre Completo
                                 </label>
-                                <input required placeholder="Tu nombre" name="userName" type="text"
+                                <input required placeholder="Tu nombre" name="username" type="text"
                                 className='mt-2 bg-white/90 rounded-md p-2 shadow-sm w-[205px] text-sm'
                                 onChange={getData}/>
                             </div>
@@ -114,8 +109,8 @@ const OnBoarding = ({ modalState, setModalState }) => {
                                 <label htmlFor="genderInterest" className='text-sm font-bold text-[#ed3434]'>
                                     Me Interesan
                                 </label>
-                                <select required name="genderInterest" className='mt-2 bg-white/90 rounded-md p-2
-                                shadow-sm w-[205px] text-sm' defaultValue="default"
+                                <select required name="genderInterest" className='mt-2 bg-white/90 rounded-md
+                                p-2 shadow-sm w-[205px] text-sm' defaultValue="default"
                                 onChange={getData}>
                                     <option value="default" disabled>Opciones</option>
                                     <option value="man">Hombres</option>
@@ -136,38 +131,20 @@ const OnBoarding = ({ modalState, setModalState }) => {
                         </div>
                     </div>
                     <div className="newUserFormContainer2">
-                        <p className="text-sm font-bold text-[#ed3434]">Fotos Del Perfil</p>
-                        <div className="newUserFormImages">
-                            <label htmlFor="img1" className='relative aspect-[4/5] bg-[#e0d4d4] w-24
-                            rounded-lg cursor-pointer border-2 border-[#E87C7C] border-dashed'>
-                                <FaTimesCircle size={18} className="bg-[#FFEAEA] text-[#ed3434]
-                                rotate-45 rounded-full absolute -bottom-1 -right-1" />
-                            </label>
-                            <input required type="file" name="img1" accept=".png, .jpg, .jpeg" className="hidden"
-                            onChange={handleImg1} id="img1"/>
-                            <label htmlFor="img2" className='relative aspect-[4/5] bg-[#e0d4d4] w-24
-                            rounded-lg cursor-pointer border-2 border-[#E87C7C] border-dashed'>
-                                <FaTimesCircle size={18} className="bg-[#FFEAEA] text-[#ed3434]
-                                rotate-45 rounded-full absolute -bottom-1 -right-1" />
-                            </label>
-                            <input required type="file" name="img2" accept=".png, .jpg, .jpeg" className="hidden"
-                            onChange={handleImg2} id="img2"/>
-                            <label htmlFor="img3" className='relative aspect-[4/5] bg-[#e0d4d4] w-24
-                            rounded-lg cursor-pointer border-2 border-[#E87C7C] border-dashed'>
-                                <FaTimesCircle size={18} className="bg-[#FFEAEA] text-[#ed3434]
-                                rotate-45 rounded-full absolute -bottom-1 -right-1" />
-                            </label>
-                            <input required type="file" name="img3" accept=".png, .jpg, .jpeg" className="hidden"
-                            onChange={handleImg3} id="img3"/>
-                            <label htmlFor="img4" className='relative aspect-[4/5] bg-[#e0d4d4] w-24
-                            rounded-lg cursor-pointer border-2 border-[#E87C7C] border-dashed'>
-                                <FaTimesCircle size={18} className="bg-[#FFEAEA] text-[#ed3434]
-                                rotate-45 rounded-full absolute -bottom-1 -right-1" />
-                            </label>
-                            <input required type="file" name="img4" accept=".png, .jpg, .jpeg" className="hidden"
-                            onChange={handleImg4} id="img4"/>
-                        </div>
-                        <small className='mt-2'>Se requieren 4 imágenes para crear el perfil.</small>
+                        <p className="text-sm font-bold text-[#ed3434]">Fotos del Perfil</p>
+                        <input type="url" name="img1" className='bg-white/90 rounded-md p-2 shadow-sm
+                        w-[205px] text-sm' placeholder="link a imagen 1" required
+                        onChange={getData}/>
+                        <input type="url" name="img2" className='bg-white/90 rounded-md p-2 shadow-sm
+                        w-[205px] text-sm' placeholder="link a imagen 2" required
+                        onChange={getData}/>
+                        <input type="url" name="img3" className='bg-white/90 rounded-md p-2 shadow-sm
+                        w-[205px] text-sm' placeholder="link a imagen 3" required
+                        onChange={getData}/>
+                        <input type="url" name="img4" className='bg-white/90 rounded-md p-2 shadow-sm
+                        w-[205px] text-sm' placeholder="link a imagen 4" required
+                        onChange={getData}/>
+                        <small>Se requieren 4 imágenes para crear el perfil.</small>
                     </div>
                     <button type="submit" className='btnSubmit btnSubmitGradient textShadowSm btnTransition py-2
                     btnShadow shadow-md font-bold tracking-wider absolute text-[#FFEAEA] rounded-full px-6'>

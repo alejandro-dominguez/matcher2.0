@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(true)
         try {
             const res = await signInWithPopup(auth, googleProvider)
-            console.log(res.user)
         } catch (error) {
             setError(error)
         } finally {

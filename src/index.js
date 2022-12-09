@@ -4,6 +4,7 @@ import App from './App';
 import './App.css';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './hooks/useAuth';
+import { ProfilesProvider } from './hooks/useProfiles';
 
 const root = ReactDOM.createRoot(
 	  document.getElementById('root')
@@ -11,7 +12,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <AuthProvider>
-        <App/>
+        <ProfilesProvider>
+            <div className='overflow-hidden'>
+                <App/>
+            </div>
+        </ProfilesProvider>
     </AuthProvider>
 );
 

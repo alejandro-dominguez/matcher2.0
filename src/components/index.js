@@ -21,5 +21,3 @@ export { default as UserMobileNav } from './userComponents/UserMobileNav';
 export { default as UserMobileFooter } from './userComponents/UserMobileFooter';
 export { default as UserSideBar } from './userComponents/UserSideBar';
 export { default as UserBtns } from './userComponents/UserBtns';
-export { default as SwiperCard2 } from './swiperTests/SwiperCard2';
-export { default as SwiperCard3 } from './swiperTests/SwiperCard3';

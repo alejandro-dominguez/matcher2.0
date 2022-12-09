@@ -5,18 +5,18 @@ import { OnBoarding, Login, FullScreenLoader } from '../components/';
 import useAuth from "../hooks/useAuth";
 
 const Register = () => {
-    const { googleLogin, isLoading } = useAuth()
+    const { googleLogin, isLoading, user } = useAuth()
     const [showModalForm, setShowModalForm] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
 
     const handleRegister = () => {
         googleLogin()
-        if (!isLoading) setShowModalForm(true)
+        if (!isLoading && user) setShowModalForm(true)
     }
 
     const handleLogin = () => {
         googleLogin()
-        if (!isLoading) setShowLogin(true)
+        if (!isLoading && user) setShowLogin(true)
     }
     
     return (
@@ -38,13 +38,13 @@ const Register = () => {
                 py-4 flex justify-center gap-4 items-center shadow-md btnTransition btnHoverShadow"
                 onClick={() => handleRegister()}>
                     <FaUser size={22} />
-                    <p className="font-semibold">Login con Google</p>
+                    <p className="font-semibold text-[0.95rem]">Registrarme con Google</p>
                 </button>
                 <button type="button" className="rounded-lg min-w-[16rem] py-4 flex justify-center
                 items-center shadow-md gap-4 btnTransition bg-[#FFEAEA] btnHoverShadowRed btnGradient"
                 onClick={() => handleLogin()}>
                     <FaHeart color="#ed3434" size={20} />
-                    <p className="font-semibold">Ya tengo una cuenta</p>
+                    <p className="font-semibold text-[0.95rem]">Ya he creado una cuenta</p>
                 </button>
             </div>
         </main>

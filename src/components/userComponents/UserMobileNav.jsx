@@ -17,7 +17,7 @@ const UserMobileNav = () => {
             <div className='w-36'>
                 <img src={logo} alt="Matcher logo" className='block w-full' loading='lazy' />
             </div>
-            <div onClick={() => handleLogout()}>
+            <div onClick={() => navigate("/feed")}>
                 <div className="btnFeedGradient sideBarIcon rounded-full p-3">
                     <FaRedoAlt className='-scale-x-100 -rotate-6 text-lg text-[#FFEAEA]'/>
                 </div>

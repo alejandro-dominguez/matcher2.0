@@ -1,13 +1,15 @@
-import profile from '../../assets/horacio.png';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { NotificationsModal } from '..';
+import { NotificationsModal } from '../';
 import { useState } from 'react';
+import useProfiles from '../../hooks/useProfiles';
 
 const MobileFooter = () => {
     const [showModal, setShowModal] = useState(false)
     const [showMessages, setShowMessages] = useState(false)
     const [showMatches, setShowMatches] = useState(false)
+    const { userProfile } = useProfiles()
+    const loggedUser = userProfile[0]
 
     const handleMatches = () => {
         setShowModal(true)
@@ -30,9 +32,10 @@ const MobileFooter = () => {
             <FaCommentAlt size={33} className="cursor-pointer text-[#FFEAEA] sideBarIcon"
             onClick={() => handleMessages()} />
             <Link to="/user">
-                <div className="p-[0.25rem] bg-[#ed3434] rounded-full">
-                    <div style={{backgroundImage: `url(${profile})`}} className='h-[2.75rem] w-[2.75rem] bg-cover
-                    bg-center bg-no-repeat rounded-full'/>
+                <div className="p-[0.2rem] bg-[#ed3434] rounded-full">
+                    {loggedUser ? <div style={{backgroundImage: `url(${loggedUser.img1})`}}
+                    className='h-[2.75rem] w-[2.75rem] bg-cover bg-center bg-no-repeat rounded-full'/>
+                    : null}
                 </div>
             </Link>
         </div>

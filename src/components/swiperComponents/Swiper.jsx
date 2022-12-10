@@ -4,7 +4,7 @@ import { FaUser } from 'react-icons/fa';
 import { SwiperDescription } from '../';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { IoHeartCircleOutline } from 'react-icons/io5'; 
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc/* , getDoc */ } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import useAuth from '../../hooks/useAuth';
 import useProfiles from '../../hooks/useProfiles';
@@ -44,7 +44,7 @@ const Swiper = ({
         setShowUi(false)
     }
 
-    const handleDislike = (e) => {
+    const handleDislike = async (e) => {
         animateLeft()
         const swiperCardId = () => {
             const cardId = e.target
@@ -58,7 +58,7 @@ const Swiper = ({
         setDoc(doc(db, "users", user.uid, "dislikes", dislikedUser.id), dislikedUser)
     }
 
-    const handleLike = (e) => {
+    const handleLike = async (e) => {
         animateRight()
         const swiperCardId = () => {
             const cardId = e.target
@@ -69,6 +69,7 @@ const Swiper = ({
         const likedUserId = swiperCardId()
         const likedUserArray = profiles.filter(userProfile => userProfile.id === likedUserId)
         const likedUser = likedUserArray[0]
+        /* const loggedUser = (await getDoc(doc(db, "users", user.uid))).data() */
         setDoc(doc(db, "users", user.uid, "likes", likedUser.id), likedUser)
     }
 

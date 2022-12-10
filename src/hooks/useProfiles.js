@@ -39,6 +39,7 @@ export const ProfilesProvider = ({ children }) => {
 
             getCards = onSnapshot(query(collection(db, "users"),
             where("id", "not-in", [...dislikedUsers, ...likedUsers])), (snapshot) => {
+                console.log(snapshot.docs)
                 try {
                     setProfiles(
                         snapshot.docs
@@ -58,7 +59,7 @@ export const ProfilesProvider = ({ children }) => {
         }
         fetchData()
         return getCards
-    }, [user.uid])
+    }, [user])
 
     useEffect(() => {
         setLoadingUser(true)

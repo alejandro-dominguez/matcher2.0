@@ -2,7 +2,6 @@ import {
     createContext,
     useContext,
     useEffect,
-    useMemo,
     useState
 } from "react";
 import {
@@ -30,7 +29,7 @@ export const AuthProvider = ({ children }) => {
             setUser(null)
         }
         setInitialLoading(false)
-    }), [])
+    }), [user])
 
     const googleLogin = async () => {
         setIsLoading(true)
@@ -50,16 +49,14 @@ export const AuthProvider = ({ children }) => {
         .finally(() => setIsLoading(false))
     }
 
-    const memoValues = useMemo(() => ({
-        user,
-        googleLogin,
-        isLoading,
-        logout,
-        error,
-    }), [user, isLoading, error])
-
     return (
-        <AuthContext.Provider value={memoValues}>
+        <AuthContext.Provider value={{
+            user,
+            googleLogin,
+            isLoading,
+            logout,
+            error,
+        }}>
             {!initialLoading && children}
         </AuthContext.Provider>
     )

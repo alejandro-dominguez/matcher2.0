@@ -4,6 +4,10 @@ import { FaUser } from 'react-icons/fa';
 import { SwiperDescription } from '../';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { IoHeartCircleOutline } from 'react-icons/io5'; 
+import { setDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase/config';
+import useAuth from '../../hooks/useAuth';
+import useProfiles from '../../hooks/useProfiles';
 import shortenText from './../../utils/shortenText';
 
 const Swiper = ({
@@ -17,6 +21,8 @@ const Swiper = ({
     const [sliderBtnPressed, setSliderBtnPressed] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [showUi, setShowUi] = useState(true)
+    const { user } = useAuth()
+    const { profiles } = useProfiles()
     const name = shortenText(profile.username, 16)
 
     const prevSlide = () => {
@@ -38,15 +44,43 @@ const Swiper = ({
         setShowUi(false)
     }
 
-    const handleDislike = () => {
+    const handleDislike = (e) => {
+        animateLeft()
+        const swiperCardId = () => {
+            const cardId = e.target
+            .closest("div")
+            .getAttribute("id")
+            return cardId
+        }
+        const dislikedUserId = swiperCardId()
+        const dislikedUserArray = profiles.filter(userProfile => userProfile.id === dislikedUserId)
+        const dislikedUser = dislikedUserArray[0]
+        setDoc(doc(db, "users", user.uid, "dislikes", dislikedUser.id), dislikedUser)
+    }
+
+    const handleLike = (e) => {
+        animateRight()
+        const swiperCardId = () => {
+            const cardId = e.target
+            .closest("div")
+            .getAttribute("id")
+            return cardId
+        }
+        const likedUserId = swiperCardId()
+        const likedUserArray = profiles.filter(userProfile => userProfile.id === likedUserId)
+        const likedUser = likedUserArray[0]
+        setDoc(doc(db, "users", user.uid, "likes", likedUser.id), likedUser)
+    }
+
+    const animateLeft = () => {
         setActiveClassState(true)
         setFadeState(false)
         setTimeout(() => {
             setCardState(false)
         }, 500)
     }
-
-    const handleLike = () => {
+    
+    const animateRight = () => {
         setActiveClassState(true)
         setFadeState(true)
         setTimeout(() => {
@@ -102,18 +136,22 @@ const Swiper = ({
         />
         {showUi ?
         <div className="absolute bottom-2 md:bottom-4 translate-x-1/2 right-1/2">
-            <div className="flex gap-20 md:gap-32 justify-center items-center">
+            <div className="flex gap-20 md:gap-32 justify-center items-center" id={profile.id}>
                 <button type='button' className='iconShadow text-[#FFEAEA] hover:text-[#1F9AFF]
-                hover:scale-110 transition-all duration-200 ease-linear noSelect'>
-                    <RiCloseCircleLine size={80} onClick={() => handleDislike()} />
+                hover:scale-110 transition-all duration-200 ease-linear noSelect'
+                onClick={(e) => handleDislike(e)}>
+                    <RiCloseCircleLine size={80} />
                 </button>
                 <button type='button' className='iconShadow text-[#ed3434] hover:text-[#72E52D]
-                hover:scale-110 transition-all duration-200 ease-linear noSelect'>
-                    <IoHeartCircleOutline size={80} onClick={() => handleLike()} />
+                hover:scale-110 transition-all duration-200 ease-linear noSelect'
+                onClick={(e) => handleLike(e)}>
+                    <IoHeartCircleOutline size={80} />
                 </button>
             </div>
         </div>
         : null}
+        <div className='w-[18.3rem] md:w-[22.05rem] aspect-[4/5] rounded-3xl pageGradientBg
+        border border-rose-400'/>
         </>
     )
 }

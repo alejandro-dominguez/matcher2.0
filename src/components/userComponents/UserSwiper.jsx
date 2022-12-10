@@ -79,7 +79,7 @@ const UserSwiper = ({
                         </div>
                         : null}
                         <div style={{backgroundImage: `url(${userSwiperSlides[currentIndex].url})`}}
-                        className="bg-cover bg-center bg-no-repeat absolute top-0 left-0 h-full w-full rounded-2xl"/>
+                        className="bg-cover bg-center bg-no-repeat absolute top-0 left-0 h-full w-full rounded-3xl"/>
                         {showUi ?
                         <div className="absolute bottom-40 left-1/2 -translate-x-1/2 justify-between items-center
                         gap-48 md:gap-56 flex z-30">
@@ -109,10 +109,11 @@ const UserSwiper = ({
                             </button>
                         </div>))
                         : null}
+                        <div className='w-[18.3rem] md:w-[20.05] aspect-[4/5] rounded-3xl pageGradientBg'/>
                     </div>
                 </div>
                 <div className="w-80 h-[104px] bg-[#FFEAEA] rounded-lg hidden md:flex justify-between
-                items-end gap-2 p-3 shadow-sm hover:shadow-md">
+                items-end gap-2 p-3 shadow-sm hover:shadow-md cardShadow">
                     <p className='text-sm font-medium flex self-start'>{desc}</p>
                     <button type='button' className='text-[#ed3434] textShadowSm font-bold px-4 py-1
                     rounded-2xl min-w-max gradientBg shadow-md shadow-black/10 btnTransition btnShadow'

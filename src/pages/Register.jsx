@@ -5,7 +5,7 @@ import { OnBoarding, Login, FullScreenLoader } from '../components/';
 import useAuth from "../hooks/useAuth";
 
 const Register = () => {
-    const { googleLogin, isLoading, user } = useAuth()
+    const { googleLogin, isLoading, user, error } = useAuth()
     const [showModalForm, setShowModalForm] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
 
@@ -22,7 +22,7 @@ const Register = () => {
     return (
         <>
         {isLoading ? <FullScreenLoader/>
-        : 
+        : !error ?
         <>
         <main className='gradientBg h-screen w-full flex flex-col gap-12 items-center justify-center'>
             <div className="w-56">
@@ -50,7 +50,8 @@ const Register = () => {
         </main>
         <OnBoarding modalState={showModalForm} setModalState={setShowModalForm} />
         <Login modalState={showLogin} setModalState={setShowLogin} />
-        </>}
+        </>
+        : null}
         </>
     )
 }

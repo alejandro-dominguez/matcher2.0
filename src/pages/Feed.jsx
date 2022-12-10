@@ -1,5 +1,6 @@
 import { React } from 'react';
-import { SideBar,
+import {
+    SideBar,
     SwiperCard,
     NoMoreMatches,
     Recommended,
@@ -12,12 +13,13 @@ import useProfiles from '../hooks/useProfiles';
 
 const Feed = () => {
     const { isLoading } = useAuth()
-    const { profiles, loadingProfiles } = useProfiles()
+    const { profiles, loadingProfiles, error } = useProfiles()
 
     return (
         <>
         {isLoading || loadingProfiles ? <FullScreenLoader />
-        : <div className='xlContainer'>
+        : !error ?
+        <div className='xlContainer'>
             <div className="pageGradientBg flex flex-col-reverse md:flex md:flex-row items-center justify-center
             h-screen w-full relative">
                 <div className="sideBarContainer md:block hidden">
@@ -30,7 +32,7 @@ const Feed = () => {
                     {profiles ?
                     profiles.map((profile, i) => <SwiperCard profile={profile} key={i} />)
                     : null}
-                    {profiles ? <NoMoreMatches />
+                    {!profiles || profiles ? <NoMoreMatches />
                     : null}
                 </main>
                 <div className="sideBarContainer md:block bg-[#FF929D] hidden">
@@ -40,7 +42,8 @@ const Feed = () => {
                     <MobileNav />
                 </div>
             </div>
-        </div>}
+        </div>
+        : null}
         </>
     )
 }

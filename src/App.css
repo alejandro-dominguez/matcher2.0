@@ -510,7 +510,7 @@ textarea {
 	}
 
 	.fadeInOpacity {
-		animation: fadeInOpacity 3s linear forwards;
+		animation: fadeInOpacity 2s linear forwards;
 	}
 
 	.swiperInfoContainer {

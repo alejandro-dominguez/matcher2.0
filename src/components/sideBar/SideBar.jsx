@@ -52,7 +52,7 @@ const SideBar = () => {
                 </div>
                 <Link to="/user">
                     <div className="sideBarBox flex flex-col items-center justify-center mt-10">
-                        <div className="p-[0.25rem] bg-[#ed3434] transition-colors rounded-full">
+                        <div className="p-[0.27rem] bg-[#ed3434] transition-colors rounded-full">
                             {loggedUser ? <div style={{backgroundImage: `url(${loggedUser.img1})`}}
                             className='h-28 w-28 bg-cover bg-center bg-no-repeat rounded-full'/>
                             : null}

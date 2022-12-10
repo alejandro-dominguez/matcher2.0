@@ -11,12 +11,13 @@ import useProfiles from '../hooks/useProfiles';
 
 const UserPage = () => {
     const { isLoading } = useAuth()
-    const { loadingUser } = useProfiles()
+    const { loadingUser, error } = useProfiles()
 
     return (
         <>
         {isLoading || loadingUser ? <FullScreenLoader/>
-        : <div className='xlContainer'>
+        : !error ?
+        <div className='xlContainer'>
             <div className="pageGradientBg h-screen w-full flex flex-col md:flex-row justify-center
             md:justify-between items-center relative">
                 <div className="sideBarContainer md:block hidden">
@@ -35,7 +36,8 @@ const UserPage = () => {
                     <UserMobileFooter />
                 </div>
             </div>
-        </div>}
+        </div>
+        : null}
         </>
     )
 }

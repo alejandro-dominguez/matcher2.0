@@ -2,13 +2,11 @@ import { FaHeart, FaCommentAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { NotificationsModal } from '../';
 import { useState } from 'react';
-import useProfiles from '../../hooks/useProfiles';
 
-const MobileFooter = () => {
+const MobileFooter = ({ userProfile }) => {
     const [showModal, setShowModal] = useState(false)
     const [showMessages, setShowMessages] = useState(false)
     const [showMatches, setShowMatches] = useState(false)
-    const { userProfile } = useProfiles()
     const loggedUser = userProfile[0]
 
     const handleMatches = () => {
@@ -31,7 +29,7 @@ const MobileFooter = () => {
             onClick={() => handleMatches()} />
             <FaCommentAlt size={33} className="cursor-pointer text-[#FFEAEA] sideBarIcon"
             onClick={() => handleMessages()} />
-            <Link to="/user">
+            <Link to="/app/user">
                 <div className="p-[0.2rem] bg-[#ed3434] rounded-full">
                     {loggedUser ? <div style={{backgroundImage: `url(${loggedUser.img1})`}}
                     className='h-[2.75rem] w-[2.75rem] bg-cover bg-center bg-no-repeat rounded-full'/>
@@ -40,6 +38,7 @@ const MobileFooter = () => {
             </Link>
         </div>
         <NotificationsModal
+            loggedUser={loggedUser}
             modalState={showModal}
             setModalState={setShowModal}
             messagesState={showMessages}

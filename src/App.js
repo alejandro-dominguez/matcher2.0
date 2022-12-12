@@ -1,14 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Register, Feed, UserPage, ErrorPage } from './pages/';
+import { Register, WelcomePage, AppPage, ErrorPage } from './pages/';
+import useAuth from "./hooks/useAuth";
 
 const App = () => {
+    const { user } = useAuth()
 
     return (
       	<BrowserRouter>
             <Routes>
-                <Route path="/" element={<Register />} errorElement={<ErrorPage/>} />
-                <Route path="/feed" element={<Feed />} errorElement={<ErrorPage />} />
-                <Route path="/user" element={<UserPage />} errorElement={<ErrorPage />} />
+                {!user ? <Route path="/" element={<Register />} errorElement={<ErrorPage/>} />
+                : 
+                <Route path="/app/*" element={<AppPage />} errorElement={<ErrorPage/>} />}
             </Routes>
         </BrowserRouter>
     )

@@ -1,10 +1,8 @@
 import { UserSwiper } from "../";
 import { useState } from 'react';
-import useProfiles from "../../hooks/useProfiles";
 
-const UserSwiperCard = () => {
+const UserSwiperCard = ({ userProfile }) => {
     const [showEditModal, setShowEditModal] = useState(false)
-    const { userProfile } = useProfiles()
     const loggedUser = userProfile[0]
 
     const userSwiperSlides = [
@@ -15,8 +13,6 @@ const UserSwiperCard = () => {
     ]
 
     return (
-        <>
-        {loggedUser ?
         <main className='relative w-[18.25rem] md:w-[22rem] aspect-[4/5] flex flex-col
         items-center justify-center gap-4'>
             <UserSwiper
@@ -26,8 +22,6 @@ const UserSwiperCard = () => {
                 setModalEditState={setShowEditModal}
             />
         </main>
-        : null}
-        </>
     )
 }
 

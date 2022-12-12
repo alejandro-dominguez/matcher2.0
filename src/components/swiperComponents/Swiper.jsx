@@ -4,11 +4,10 @@ import { FaUser } from 'react-icons/fa';
 import { SwiperDescription } from '../';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { IoHeartCircleOutline } from 'react-icons/io5'; 
-import { setDoc, doc/* , getDoc */ } from 'firebase/firestore';
+import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import useAuth from '../../hooks/useAuth';
-import useProfiles from '../../hooks/useProfiles';
-import shortenText from './../../utils/shortenText';
+import shortenText from '../../utils/shortenText';
 
 const Swiper = ({
     profile,
@@ -22,7 +21,6 @@ const Swiper = ({
     const [showModal, setShowModal] = useState(false)
     const [showUi, setShowUi] = useState(true)
     const { user } = useAuth()
-    const { profiles } = useProfiles()
     const name = shortenText(profile.username, 16)
 
     const prevSlide = () => {
@@ -55,6 +53,7 @@ const Swiper = ({
         const dislikedUserId = swiperCardId()
         const dislikedUserArray = profiles.filter(userProfile => userProfile.id === dislikedUserId)
         const dislikedUser = dislikedUserArray[0]
+        const loggedUser = (await getDoc(doc(db, "users", user.uid))).data()
         setDoc(doc(db, "users", user.uid, "dislikes", dislikedUser.id), dislikedUser)
     }
 
@@ -69,7 +68,7 @@ const Swiper = ({
         const likedUserId = swiperCardId()
         const likedUserArray = profiles.filter(userProfile => userProfile.id === likedUserId)
         const likedUser = likedUserArray[0]
-        /* const loggedUser = (await getDoc(doc(db, "users", user.uid))).data() */
+        const loggedUser = (await getDoc(doc(db, "users", user.uid))).data()
         setDoc(doc(db, "users", user.uid, "likes", likedUser.id), likedUser)
     }
 
@@ -91,7 +90,7 @@ const Swiper = ({
     
     return (
         <>
-        {showUi ?
+        {showUi && profile ?
         <div className="relative top-[0.9rem] left-1/2 -translate-x-1/2 flex justify-between
         items-center px-4 md:px-6 z-10">
             <div className={currentIndex === 0 ? "sliderCounter bg-white imgShadow"
@@ -122,9 +121,9 @@ const Swiper = ({
                     <h1 className='textShadow font-extrabold text-xl md:text-2xl'>{name}</h1>
                     <h3 className='textShadow font-extrabold text-lg md:text-xl'>{`${profile.age} años`}</h3>
                 </div>
-                <button type='button' className='text-[#ed3434] textShadowSm font-bold p-[0.45rem]
-                absolute top-[1.6rem] rounded-full gradientBg shadow-md shadow-black/10 right-4
-                btnTransition btnShadow grid place-items-center md:hidden' onClick={() => handleSetShowModal()}>
+                <button type='button' className='text-[#ed3434] p-[0.45rem] absolute top-[1.6rem] rounded-full
+                pageGradientBg shadow-md shadow-black/10 right-4 btnTransition grid place-items-center
+                md:hidden btnShadow' onClick={() => handleSetShowModal()}>
                     <FaUser size={12} className="block"/>
                 </button>
             </div>))

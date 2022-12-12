@@ -3,14 +3,12 @@ import { useState } from 'react';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { NotificationsModal } from '../';
-import useProfiles from '../../hooks/useProfiles';
-import shortenText from './../../utils/shortenText';
+import shortenText from '../../utils/shortenText';
 
-const UserSideBar = () => {
+const UserSideBar = ({ userProfile }) => {
     const [showModal, setShowModal] = useState(false)
     const [showMessages, setShowMessages] = useState(false)
     const [showMatches, setShowMatches] = useState(false)
-    const { userProfile } = useProfiles()
     const loggedUser = userProfile[0]
     const userFullName = loggedUser.username
     
@@ -36,12 +34,14 @@ const UserSideBar = () => {
 
     return (
         <>
+        {userProfile ?
+        <>
         <div className='flex flex-col items-center justify-center py-10 bg-[#FF929D] h-screen'>
             <div className="flex flex-col gap-16 items-center">
                 <div className='w-20'>
                     <img src={logo} alt="Matcher logo" className='w-full block' loading='lazy' />
                 </div>
-                <Link to="/user">
+                <Link to="/app/user">
                     <div className="sideBarBox flex flex-col items-center justify-center mt-10">
                         <div className="p-[0.27rem] bg-[#ed3434] transition-colors rounded-full">
                             {loggedUser ? <div style={{backgroundImage: `url(${loggedUser.img1})`}}
@@ -62,6 +62,7 @@ const UserSideBar = () => {
             </div>
         </div>
         <NotificationsModal
+            loggedUser={loggedUser}
             modalState={showModal}
             setModalState={setShowModal}
             messagesState={showMessages}
@@ -69,6 +70,8 @@ const UserSideBar = () => {
             setMatchesState={setShowMatches}
             setMessagesState={setShowMessages}
         />
+        </>
+        : null}
         </>
     )
 

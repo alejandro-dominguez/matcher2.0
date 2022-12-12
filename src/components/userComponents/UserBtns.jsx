@@ -16,7 +16,7 @@ const UserBtns = () => {
             <div className='flex flex-col items-start justify-center gap-8'>
                 <div className="text-[#FFEAEA] grid place-items-center rounded-full py-3 gap-1 w-[4.6rem]
                 cursor-pointer btnFeedGradient transition-transform hover:scale-[1.025]"
-                onClick={() => navigate("/feed")}>
+                onClick={() => navigate("/app/feed")}>
                     <FaRedoAlt className='-scale-x-100 -rotate-6 text-2xl'/>
                     <button type='button'>
                         <p className='text-center font-semibold text-sm'>Feed</p>

@@ -22,7 +22,7 @@ const SwiperDescription = ({
 
     return (
         <>
-        {modalState ?
+        {modalState && profile ?
         <>
         <div className={activeClass ? "descriptionModal cardShadow fadeInModal active"
         : "descriptionModal cardShadow fadeInModal"}>

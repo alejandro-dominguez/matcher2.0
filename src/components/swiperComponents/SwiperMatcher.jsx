@@ -14,15 +14,19 @@ const SwiperMatcher = ({
     ]
 
     return (
-    <div className='relative w-[18.25rem] md:w-[22rem] aspect-[4/5]'>
-        <Swiper
-            profile={profile}
-            swiperSlides={swiperSlides}
-            setCardState={setCardState}
-            setActiveClassState={setActiveClassState}
-            setFadeState={setFadeState}
-        />
-    </div>
+        <>
+        {profile ?
+        <div className='relative w-[18.25rem] md:w-[22rem] aspect-[4/5]'>
+            <Swiper
+                profile={profile}
+                swiperSlides={swiperSlides}
+                setCardState={setCardState}
+                setActiveClassState={setActiveClassState}
+                setFadeState={setFadeState}
+            />
+        </div>
+        : null}
+        </>
     )
 }
 

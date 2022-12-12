@@ -1,13 +1,15 @@
-import { FaTimesCircle } from 'react-icons/fa';
+import {
+    serverTimestamp,
+    setDoc,
+    doc
+} from 'firebase/firestore';
+import { db } from '../firebase/config';
 import { useState } from 'react';
-import { OnBoardingSuccess } from '../';
-import { serverTimestamp, setDoc, doc } from 'firebase/firestore';
-import { db } from '../../firebase/config';
-import useAuth from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
+import FullScreenLoader from './../components/fullScreenLoader/FullScreenLoader';
 
-const OnBoarding = ({ modalState, setModalState }) => {
-    const [activeClass, SetActiveClass] = useState(false)
-    const [showModalSuccess, setShowModalSuccess] = useState(false)
+const OnBoarding = () => {
     const [formData, setFormData] = useState({
         username: "",
         age: 18,
@@ -19,7 +21,12 @@ const OnBoarding = ({ modalState, setModalState }) => {
         img3: "",
         img4: ""
     })
-    const { user } = useAuth()
+    const {
+        user,
+        isLoading,
+        error
+    } = useAuth()
+    const navigate = useNavigate()
 
     const getData = (e) => {
             setFormData(
@@ -45,32 +52,15 @@ const OnBoarding = ({ modalState, setModalState }) => {
             })
         }
         updateUserProfile()
-        setShowModalSuccess(true)
         e.target.reset()
+        navigate("/app/welcome")
     }
 
-    const handleClose = () => {
-        SetActiveClass(true)
-        setTimeout(() => {
-            setModalState(false)
-        }, 300)
-        setTimeout(() => {
-            SetActiveClass(false)
-        }, 350)
-    }
-        
     return (
         <>
-        {modalState ?
-        <>
-        <div className='formModalXl w-full h-full fixed top-0 left-0 bg-black/50 flex flex-col
-        items-center justify-center'>
-            <div className={activeClass ? "formModal formModalXl fadeInModal active"
-            : "formModal formModalXl fadeInModal"}>
-                <button type='button' className='btnNewUserFormClose absolute text-[#2346e3] iconShadowSm
-                transition-all hover:scale-105' onClick={() => handleClose()}>
-                    <FaTimesCircle className="text-[1.5rem] md:text-[2.5rem]" />
-                </button>
+        {user && !isLoading && !error ?
+        <div className='formModalXl w-screen h-screen grid place-items-center'>
+            <div className="formModal">
                 <form onSubmit={handleSubmit} className="newUserForm">
                     <div className='newUserFormContainer1'>
                         <div className='newUserFormData'>
@@ -153,16 +143,9 @@ const OnBoarding = ({ modalState, setModalState }) => {
                 </form>
             </div>
         </div>
-        <OnBoardingSuccess
-            modalState={modalState}
-            setModalState={setModalState}
-            modalSuccess={showModalSuccess}
-            setModalSuccess={setShowModalSuccess}
-        />
+        : <FullScreenLoader />}
         </>
-        : null}
-        </>
-    )
+        )
 }
 
 export default OnBoarding;

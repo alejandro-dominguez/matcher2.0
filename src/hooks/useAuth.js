@@ -2,6 +2,7 @@ import {
     createContext,
     useContext,
     useEffect,
+    useMemo,
     useState
 } from "react";
 import {
@@ -35,6 +36,7 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(true)
         try {
             const res = await signInWithPopup(auth, googleProvider)
+            setUser(res.user)
         } catch (error) {
             setError(error)
         } finally {
@@ -49,14 +51,16 @@ export const AuthProvider = ({ children }) => {
         .finally(() => setIsLoading(false))
     }
 
+    const memoValues = useMemo(() => ({
+        user,
+        googleLogin,
+        isLoading,
+        logout,
+        error,
+    }), [user, isLoading, error])
+
     return (
-        <AuthContext.Provider value={{
-            user,
-            googleLogin,
-            isLoading,
-            logout,
-            error,
-        }}>
+        <AuthContext.Provider value={memoValues}>
             {!initialLoading && children}
         </AuthContext.Provider>
     )

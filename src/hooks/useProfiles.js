@@ -1,26 +1,28 @@
 import {
-    createContext,
-    useContext,
-    useState,
-    useEffect
-} from "react";
-import {
-    onSnapshot,
     collection,
     getDocs,
+    onSnapshot,
     query,
-    where,
-} from 'firebase/firestore';
-import { db } from '../firebase/config';
+    where
+} from "firebase/firestore";
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useMemo,
+    useState
+} from "react";
+import { db } from "../firebase/config";
 import useAuth from "./useAuth";
 
 const ProfilesContext = createContext({});
 
 export const ProfilesProvider = ({ children }) => {
     const [loadingProfiles, setLoadingProfiles] = useState(false)
-    const [loadingUser, setLoadingUser] = useState(false)
-    const [error, setError] = useState(null)
+    const [profilesError, setProfilesError] = useState(null)
     const [profiles, setProfiles] = useState([])
+    const [loadingUser, setLoadingUser] = useState(false)
+    const [userError, setUserError] = useState(null)
     const [userProfile, setUserProfile] = useState([])
     const { user } = useAuth()
 
@@ -39,7 +41,6 @@ export const ProfilesProvider = ({ children }) => {
 
             getCards = onSnapshot(query(collection(db, "users"),
             where("id", "not-in", [...dislikedUsers, ...likedUsers])), (snapshot) => {
-                console.log(snapshot.docs)
                 try {
                     setProfiles(
                         snapshot.docs
@@ -50,7 +51,7 @@ export const ProfilesProvider = ({ children }) => {
                         }))
                     )
                 } catch (error) {
-                    setError(error)
+                    setProfilesError(error)
                 }
                 finally {
                     setLoadingProfiles(false)
@@ -64,7 +65,7 @@ export const ProfilesProvider = ({ children }) => {
     useEffect(() => {
         setLoadingUser(true)
         let getUserCards
-        const fetchData = () => {
+        const fetchData = async () => {
             getUserCards = onSnapshot(collection(db, "users"), (snapshot) => {
                 try {
                     setUserProfile(
@@ -76,7 +77,7 @@ export const ProfilesProvider = ({ children }) => {
                         }))
                     )
                 } catch (error) {
-                    setError(error)
+                    setUserError(error)
                 }
                 finally {
                     setLoadingUser(false)
@@ -87,14 +88,17 @@ export const ProfilesProvider = ({ children }) => {
         return getUserCards
     }, [user])
 
+    const memoValues = useMemo(() => ({
+        loadingProfiles,
+        profilesError,
+        profiles,
+        loadingUser,
+        userError,
+        userProfile
+    }), [loadingProfiles, loadingUser, profilesError, userError])
+
     return (
-        <ProfilesContext.Provider value={{
-            profiles,
-            userProfile,
-            loadingProfiles,
-            loadingUser,
-            error,
-        }}>
+        <ProfilesContext.Provider value={memoValues}>
             {children}
         </ProfilesContext.Provider>
     )

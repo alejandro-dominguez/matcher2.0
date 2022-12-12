@@ -1,30 +1,25 @@
 import logo from "../assets/logoRegister.svg";
-import { useState } from "react";
 import { FaUser, FaHeart } from "react-icons/fa";
-import { OnBoarding, Login, FullScreenLoader } from '../components/';
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-    const { googleLogin, isLoading, user, error } = useAuth()
-    const [showModalForm, setShowModalForm] = useState(false)
-    const [showLogin, setShowLogin] = useState(false)
-
+    const { googleLogin } = useAuth()
+    const navigate = useNavigate()
+    
     const handleRegister = () => {
         googleLogin()
-        if (!isLoading && user) setShowModalForm(true)
-    }
-
-    const handleLogin = () => {
-        googleLogin()
-        if (!isLoading && user) setShowLogin(true)
+        navigate("/app/onboarding")
     }
     
+    const handleLogin = () => {
+        googleLogin()
+        navigate("/app/welcome")
+    }
+
+
     return (
-        <>
-        {isLoading ? <FullScreenLoader/>
-        : !error ?
-        <>
-        <main className='gradientBg h-screen w-full flex flex-col gap-12 items-center justify-center'>
+        <main className='pageGradientBg h-screen w-full flex flex-col gap-12 items-center justify-center'>
             <div className="w-56">
                 <img src={logo} alt="Matcher logo" className='w-full block' />
             </div>
@@ -48,11 +43,6 @@ const Register = () => {
                 </button>
             </div>
         </main>
-        <OnBoarding modalState={showModalForm} setModalState={setShowModalForm} />
-        <Login modalState={showLogin} setModalState={setShowLogin} />
-        </>
-        : null}
-        </>
     )
 }
 

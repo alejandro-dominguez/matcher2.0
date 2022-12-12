@@ -12,7 +12,7 @@ const SwiperCard = ({ profile }) => {
 
     return (
         <>
-        {showCard ?
+        {showCard && profile ?
         <div className={!activeClass ? "swiperCard cardShadow"
         : activeClass && fadeRight ? "swiperCard cardShadow fadeOutRightCard"
         : "swiperCard cardShadow fadeOutLeftCard"} key={profile.id}>
@@ -28,7 +28,7 @@ const SwiperCard = ({ profile }) => {
             items-end gap-2 p-3 shadow-sm hover:shadow-md">
                 <p className='text-sm font-medium flex self-start'>{desc}</p>
                 <button type='button' className='text-[#ed3434] textShadowSm font-bold px-4 py-1
-                rounded-2xl min-w-max gradientBg shadow-md shadow-black/10 btnTransition btnShadow'
+                rounded-2xl min-w-max pageGradientBg shadow-md shadow-black/10 btnTransition btnShadow'
                 onClick={() => setShowModal(true)}>
                     Ver más
                 </button>

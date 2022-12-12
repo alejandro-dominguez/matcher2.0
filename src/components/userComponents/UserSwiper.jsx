@@ -53,8 +53,8 @@ const UserSwiper = ({
     return (
         <div className='grid place-items-center'>
             {showBtn ?
-            <button type="button" className="btnEditGradient textShadowSm btnTransition btnShadow w-72 md:w-80
-            py-[0.4rem] shadow-md font-bold tracking-wider text-[#FFEAEA] rounded-full"
+            <button type="button" className="btnEditGradient textShadowSm btnTransition w-72 md:w-80
+            py-[0.4rem] shadow-md font-bold tracking-wider text-[#FFEAEA] rounded-full btnShadow"
             onClick={() => handleEditBtn()}>
                 Editar perfil
             </button>
@@ -101,10 +101,9 @@ const UserSwiper = ({
                                     {`${loggedUser.age} años`}
                                 </h3>
                             </div>
-                            <button type='button' className='text-[#ed3434] textShadowSm font-bold p-[0.45rem]
-                            absolute top-[1.6rem] rounded-full gradientBg shadow-md shadow-black/10 right-4
-                            btnTransition btnShadow grid place-items-center md:hidden'
-                            onClick={() => handleSetShowModal()}>
+                            <button type='button' className='text-[#ed3434] p-[0.45rem] absolute top-[1.6rem]
+                            rounded-full pageGradientBg shadow-md shadow-black/10 right-4 btnTransition btnShadow
+                            grid place-items-center md:hidden' onClick={() => handleSetShowModal()}>
                                 <FaUser size={12} className="block"/>
                             </button>
                         </div>))
@@ -116,7 +115,7 @@ const UserSwiper = ({
                 items-end gap-2 p-3 shadow-sm hover:shadow-md cardShadow">
                     <p className='text-sm font-medium flex self-start'>{desc}</p>
                     <button type='button' className='text-[#ed3434] textShadowSm font-bold px-4 py-1
-                    rounded-2xl min-w-max gradientBg shadow-md shadow-black/10 btnTransition btnShadow'
+                    rounded-2xl min-w-max pageGradientBg shadow-md shadow-black/10 btnTransition btnShadow'
                     onClick={() => handleDescriptionBtn()}>
                         Ver más
                     </button>

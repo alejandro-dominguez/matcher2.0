@@ -1,7 +1,4 @@
 export { default as FullScreenLoader } from './fullScreenLoader/FullScreenLoader';
-export { default as OnBoarding } from './onBoardingComponents/OnBoarding';
-export { default as OnBoardingSuccess } from './onBoardingComponents/OnBoardingSuccess';
-export { default as Login } from './login/Login';
 export { default as SideBar } from './sideBar/SideBar';
 export { default as Recommended } from './recommended/Recommended';
 export { default as SwiperCard } from './swiperComponents/SwiperCard';

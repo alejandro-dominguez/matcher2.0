@@ -6,14 +6,12 @@ import { NotificationsModal } from '../';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import shortenText from './../../utils/shortenText';
-import useProfiles from '../../hooks/useProfiles';
 
-const SideBar = () => {
+const SideBar = ({ userProfile }) => {
     const [showModal, setShowModal] = useState(false)
     const [showMessages, setShowMessages] = useState(false)
     const [showMatches, setShowMatches] = useState(false)
     const { logout, isLoading } = useAuth()
-    const { userProfile } = useProfiles()
     const loggedUser = userProfile[0]
     const navigate = useNavigate()
     const userFullName = loggedUser.username
@@ -50,7 +48,7 @@ const SideBar = () => {
                 <div className='w-20'>
                     <img src={logo} alt="Matcher logo" className='w-full block' loading='lazy' />
                 </div>
-                <Link to="/user">
+                <Link to="/app/user">
                     <div className="sideBarBox flex flex-col items-center justify-center mt-10">
                         <div className="p-[0.27rem] bg-[#ed3434] transition-colors rounded-full">
                             {loggedUser ? <div style={{backgroundImage: `url(${loggedUser.img1})`}}
@@ -79,6 +77,7 @@ const SideBar = () => {
             </div>
         </div>
         <NotificationsModal
+            loggedUser={loggedUser}
             modalState={showModal}
             setModalState={setShowModal}
             messagesState={showMessages}

@@ -4,7 +4,7 @@ import { FaHeart } from 'react-icons/fa';
 
 const ErrorPage = () => {
     return (
-        <div className='gradientBg h-screen w-screen flex flex-col items-center justify-center gap-6
+        <div className='pageGradientBg h-screen w-screen flex flex-col items-center justify-center gap-6
         sm:gap-8 md:gap-10'>
             <h1 className='text-center text-5xl font-extrabold tracking-wide text-[#ed3434] textShadowSm'>
                 Error 404

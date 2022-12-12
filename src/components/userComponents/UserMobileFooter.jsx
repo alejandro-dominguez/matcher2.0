@@ -3,10 +3,11 @@ import { NotificationsModal } from '../';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const UserMobileFooter = () => {
+const UserMobileFooter = ({ userProfile }) => {
     const [showModal, setShowModal] = useState(false)
     const [showMessages, setShowMessages] = useState(false)
     const [showMatches, setShowMatches] = useState(false)
+    const loggedUser = userProfile[0]
 
     const handleMatches = () => {
         setShowModal(true)
@@ -35,6 +36,7 @@ const UserMobileFooter = () => {
             </Link>
         </div>
         <NotificationsModal
+            loggedUser={loggedUser}
             modalState={showModal}
             setModalState={setShowModal}
             messagesState={showMessages}

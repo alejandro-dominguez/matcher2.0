@@ -2,9 +2,9 @@ import logo from "../../assets/logoLoader.svg";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MatchesAndChats } from "../";
-import useProfiles from "../../hooks/useProfiles";
 
 const NotificationsModal = ({
+    loggedUser,
     modalState,
     messagesState,
     matchesState,
@@ -13,8 +13,6 @@ const NotificationsModal = ({
     setMessagesState
 }) => {
     const [activeClass, SetActiveClass] = useState(false)
-    const { userProfile } = useProfiles()
-    const loggedUser = userProfile[0]
 
     const handleClose = () => {
         SetActiveClass(true)
@@ -28,14 +26,14 @@ const NotificationsModal = ({
 
     return (
         <>
-        {modalState ?
+        {modalState && loggedUser ?
         <>
         <div className={activeClass ? "notificationsModal fadeInLeftModal active"
         : "notificationsModal fadeInLeftModal"}>
             <div className="flex flex-col items-start justify-center p-4 w-full">
                 <div className="relative h-fit w-full">
                     <div className="flex items-center justify-around w-full gap-20">
-                        <Link to="/user">
+                        <Link to="/app/user">
                             <div className="grid place-items-center transition-colors hover:text-[#ed3434]">
                                 <div className="p-[0.2rem] bg-[#ed3434] rounded-full">
                                     {loggedUser ? <div style={{backgroundImage: `url(${loggedUser.img1})`}}

@@ -1,6 +1,7 @@
 import { Swiper } from '../';
 
 const SwiperMatcher = ({
+    profiles,
     profile,
     setCardState,
     setActiveClassState,
@@ -18,6 +19,7 @@ const SwiperMatcher = ({
         {profile ?
         <div className='relative w-[18.25rem] md:w-[22rem] aspect-[4/5]'>
             <Swiper
+                profiles={profiles}
                 profile={profile}
                 swiperSlides={swiperSlides}
                 setCardState={setCardState}

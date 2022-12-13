@@ -10,6 +10,7 @@ import useAuth from '../../hooks/useAuth';
 import shortenText from '../../utils/shortenText';
 
 const Swiper = ({
+    profiles,
     profile,
     swiperSlides,
     setCardState,
@@ -53,8 +54,9 @@ const Swiper = ({
         const dislikedUserId = swiperCardId()
         const dislikedUserArray = profiles.filter(userProfile => userProfile.id === dislikedUserId)
         const dislikedUser = dislikedUserArray[0]
-        const loggedUser = (await getDoc(doc(db, "users", user.uid))).data()
-        setDoc(doc(db, "users", user.uid, "dislikes", dislikedUser.id), dislikedUser)
+        console.log(dislikedUser)
+/*         const loggedUser = (await getDoc(doc(db, "users", user.uid))).data() */
+/*         setDoc(doc(db, "users", user.uid, "dislikes", dislikedUser.id), dislikedUser) */
     }
 
     const handleLike = async (e) => {
@@ -68,8 +70,9 @@ const Swiper = ({
         const likedUserId = swiperCardId()
         const likedUserArray = profiles.filter(userProfile => userProfile.id === likedUserId)
         const likedUser = likedUserArray[0]
-        const loggedUser = (await getDoc(doc(db, "users", user.uid))).data()
-        setDoc(doc(db, "users", user.uid, "likes", likedUser.id), likedUser)
+        console.log(likedUser)
+/*         const loggedUser = (await getDoc(doc(db, "users", user.uid))).data() */
+/*         setDoc(doc(db, "users", user.uid, "likes", likedUser.id), likedUser) */
     }
 
     const animateLeft = () => {

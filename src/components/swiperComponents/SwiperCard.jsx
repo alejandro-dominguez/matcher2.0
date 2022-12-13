@@ -2,7 +2,7 @@ import { SwiperMatcher, SwiperDescription } from '../';
 import { useState } from 'react';
 import shortenText from '../../utils/shortenText';
 
-const SwiperCard = ({ profile }) => {
+const SwiperCard = ({ profile, profiles }) => {
     const [activeClass, SetActiveClass] = useState(false)
     const [fadeRight, setFadeRight] = useState(false)
     const [showCard, setShowCard] = useState(true)
@@ -18,6 +18,7 @@ const SwiperCard = ({ profile }) => {
         : "swiperCard cardShadow fadeOutLeftCard"} key={profile.id}>
             <div className="relative flex flex-col items-center justify-center">
                 <SwiperMatcher
+                    profiles={profiles}
                     profile={profile}
                     setCardState={setShowCard}
                     setActiveClassState={SetActiveClass}

@@ -56,7 +56,7 @@ const Swiper = ({
         const dislikedUser = dislikedUserArray[0]
         console.log(dislikedUser)
 /*         const loggedUser = (await getDoc(doc(db, "users", user.uid))).data() */
-/*         setDoc(doc(db, "users", user.uid, "dislikes", dislikedUser.id), dislikedUser) */
+        setDoc(doc(db, "users", user.uid, "dislikes", dislikedUser.id), dislikedUser)
     }
 
     const handleLike = async (e) => {
@@ -72,7 +72,7 @@ const Swiper = ({
         const likedUser = likedUserArray[0]
         console.log(likedUser)
 /*         const loggedUser = (await getDoc(doc(db, "users", user.uid))).data() */
-/*         setDoc(doc(db, "users", user.uid, "likes", likedUser.id), likedUser) */
+        setDoc(doc(db, "users", user.uid, "likes", likedUser.id), likedUser)
     }
 
     const animateLeft = () => {

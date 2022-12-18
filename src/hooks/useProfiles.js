@@ -9,7 +9,6 @@ import {
     createContext,
     useContext,
     useEffect,
-    useMemo,
     useState
 } from "react";
 import { db } from "../firebase/config";
@@ -60,7 +59,7 @@ export const ProfilesProvider = ({ children }) => {
         }
         fetchData()
         return getCards
-    }, [user])
+    }, [user, db])
 
     useEffect(() => {
         setLoadingUser(true)
@@ -86,19 +85,19 @@ export const ProfilesProvider = ({ children }) => {
         }
         fetchData()
         return getUserCards
-    }, [user])
-
-    const memoValues = useMemo(() => ({
-        loadingProfiles,
-        profilesError,
-        profiles,
-        loadingUser,
-        userError,
-        userProfile
-    }), [loadingProfiles, loadingUser, profilesError, userError])
+    }, [user, db])
 
     return (
-        <ProfilesContext.Provider value={memoValues}>
+        <ProfilesContext.Provider
+            value={{
+                profiles,
+                loadingProfiles,
+                profilesError,
+                loadingUser,
+                userError,
+                userProfile
+            }}
+        >
             {children}
         </ProfilesContext.Provider>
     )

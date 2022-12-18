@@ -24,7 +24,7 @@ const UserMobileFooter = ({ userProfile }) => {
     return (
         <>
         <div className='w-screen flex items-center justify-around sm:justify-between bg-[#FF929D] px-7
-        py-3 sm:px-48 absolute bottom-0 -translate-x-1/2'>
+        py-4 sm:px-48 absolute bottom-0 -translate-x-1/2'>
             <FaHeart size={35} className="cursor-pointer text-[#ed3434] sideBarIcon"
             onClick={() => handleMatches()} />
             <FaCommentAlt size={33} className="cursor-pointer text-[#FFEAEA] sideBarIcon"

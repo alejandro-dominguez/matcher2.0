@@ -18,7 +18,7 @@ const WelcomePage = () => {
     return (
         <>
         {loadingProfiles || loadingUser ? <FullScreenLoader />
-        : userProfile && profiles && !userError && !profilesError ? 
+        : profiles && userProfile && !userError && !profilesError ? 
         <div className='h-screen w-full grid place-items-center'>
             <div className='grid place-items-center gap-6'>
                 <button type='button' className='welcomePageBtn' onClick={() => navigate("/app/feed")}>

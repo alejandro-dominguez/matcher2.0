@@ -1,4 +1,4 @@
-import { ProfilesProvider } from './../hooks/useProfiles';
+import { ProfileProvider } from '../hooks/useProfile';
 import { Route, Routes } from 'react-router-dom';
 import { WelcomePage, OnBoarding, Feed, UserPage, ErrorPage } from './';
 import useAuth from '../hooks/useAuth';
@@ -7,7 +7,7 @@ const AppPage = () => {
     const { user } = useAuth()
 
     return (
-        <ProfilesProvider>
+        <ProfileProvider>
 			<Routes>
                 {user ?
                 <>
@@ -18,7 +18,7 @@ const AppPage = () => {
                 </>
                 : <Route path="error" element={<ErrorPage />} />}
 			</Routes>
-        </ProfilesProvider>
+        </ProfileProvider>
     )
 }
 

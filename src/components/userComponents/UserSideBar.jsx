@@ -37,12 +37,12 @@ const UserSideBar = ({ userProfile }) => {
         {userProfile ?
         <>
         <div className='flex flex-col items-center justify-center py-10 bg-[#FF929D] h-screen'>
-            <div className="flex flex-col gap-16 items-center">
+            <div className="flex flex-col gap-10 items-center mb-[4.25rem]">
                 <div className='w-20'>
                     <img src={logo} alt="Matcher logo" className='w-full block' loading='lazy' />
                 </div>
                 <Link to="/app/user">
-                    <div className="sideBarBox flex flex-col items-center justify-center mt-10">
+                    <div className="sideBarBox flex flex-col items-center justify-center">
                         <div className="p-[0.27rem] bg-[#ed3434] transition-colors rounded-full">
                             {loggedUser ? <div style={{backgroundImage: `url(${loggedUser.img1})`}}
                             className='h-28 w-28 bg-cover bg-center bg-no-repeat rounded-full'/>

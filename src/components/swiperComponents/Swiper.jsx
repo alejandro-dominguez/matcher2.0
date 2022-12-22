@@ -8,6 +8,8 @@ import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import useAuth from '../../hooks/useAuth';
 import shortenText from '../../utils/shortenText';
+import generetedId from '../../utils/generetedId';
+import Swal from 'sweetalert2';
 
 const Swiper = ({
     profiles,
@@ -51,12 +53,10 @@ const Swiper = ({
             .getAttribute("id")
             return cardId
         }
-        const dislikedUserId = swiperCardId()
-        const dislikedUserArray = profiles.filter(userProfile => userProfile.id === dislikedUserId)
-        const dislikedUser = dislikedUserArray[0]
-        console.log(dislikedUser)
-/*         const loggedUser = (await getDoc(doc(db, "users", user.uid))).data() */
-        setDoc(doc(db, "users", user.uid, "dislikes", dislikedUser.id), dislikedUser)
+        const swipedUserId = swiperCardId()
+        const swipedUserArray = profiles.filter(userProfile => userProfile.id === swipedUserId)
+        const swipedUser = swipedUserArray[0]
+        setDoc(doc(db, "users", user.uid, "dislikes", swipedUser.id), swipedUser)
     }
 
     const handleLike = async (e) => {
@@ -67,12 +67,42 @@ const Swiper = ({
             .getAttribute("id")
             return cardId
         }
-        const likedUserId = swiperCardId()
-        const likedUserArray = profiles.filter(userProfile => userProfile.id === likedUserId)
-        const likedUser = likedUserArray[0]
-        console.log(likedUser)
-/*         const loggedUser = (await getDoc(doc(db, "users", user.uid))).data() */
-        setDoc(doc(db, "users", user.uid, "likes", likedUser.id), likedUser)
+        const swipedUserId = swiperCardId()
+        const swipedUserArray = profiles.filter(userProfile => userProfile.id === swipedUserId)
+        const swipedUser = swipedUserArray[0]
+        const loggedUser = await (await getDoc(doc(db, "users", user.uid))).data()
+        getDoc(doc(db, "users", swipedUser.id, "likes", user.uid)).then(
+            (documentSnapshot) => {
+                if (documentSnapshot.exists()) {
+                    setDoc(doc(db, "users", user.uid, "likes", swipedUser.id), swipedUser)
+                    setDoc(doc(db, "matches", generetedId(user.uid, swipedUser.id)), {
+                        users: {
+                            [user.uid]: loggedUser,
+                            [swipedUser.id]: swipedUser
+                        },
+                        usersMatched: [user.uid, swipedUser.id]
+                    })
+                    Swal.fire({
+                        title: "¡Tienes un Match!",
+                        text: `Matcheaste con ${swipedUser.username}.`,
+                        showConfirmButton: false,
+                        position: "center-center",
+                        timer: 2500,
+                        background: "#ff929d",
+                        color: "#FFEAEA",
+                        imageUrl: "https://i.ibb.co/b3hNwXB/match.png",
+                        imageWidth: "7.5rem",
+                        imageAlt: "logo matcher mensaje con corazón",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false,
+                        stopKeydownPropagation: true,
+                    })
+                } else {
+                    setDoc(doc(db, "users", user.uid, "likes", swipedUser.id), swipedUser)
+                }
+            }
+        )
     }
 
     const animateLeft = () => {
@@ -93,7 +123,7 @@ const Swiper = ({
     
     return (
         <>
-        {showUi && profile ?
+        {showUi ?
         <div className="relative top-[0.9rem] left-1/2 -translate-x-1/2 flex justify-between
         items-center px-4 md:px-6 z-10">
             <div className={currentIndex === 0 ? "sliderCounter bg-white imgShadow"

@@ -163,8 +163,8 @@ textarea {
 	}
 	
 	.descriptionModal {
-		@apply absolute w-[101%] h-full flex flex-col bg-[#FFEAEA] rounded-xl
-		justify-center items-center z-50
+		@apply absolute w-[101%] h-[105%] md:h-full flex flex-col bg-[#FFEAEA] rounded-xl justify-center
+		items-center z-50 -translate-y-1 md:translate-y-0
 	}
 	
 	.matchesAndChatsBox:hover :first-child {
@@ -488,7 +488,7 @@ textarea {
 	}
 
 	.fadeInOpacity {
-		animation: fadeInOpacity 2s linear forwards;
+		animation: fadeInOpacity 1.25s linear forwards;
 	}
 
 	.swiperInfoContainer {
@@ -576,9 +576,6 @@ textarea {
 			opacity: 0;
 		}
 		50% {
-			opacity: 0;
-		}
-		75% {
 			opacity: 0.5;
 		}
 		100% {

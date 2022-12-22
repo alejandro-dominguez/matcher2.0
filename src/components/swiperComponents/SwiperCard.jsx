@@ -8,7 +8,7 @@ const SwiperCard = ({ profile, profiles }) => {
     const [showCard, setShowCard] = useState(true)
     const [showModal, setShowModal] = useState(false)
     const [, setShowUi] = useState(true)
-    const desc = shortenText(profile.description, 110)
+    const desc = shortenText(profile.description, 100)
 
     return (
         <>

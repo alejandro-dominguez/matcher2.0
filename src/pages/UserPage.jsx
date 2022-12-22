@@ -7,14 +7,14 @@ import {
     UserBtns
 } from '../components';
 import { ErrorPage } from '../pages/';
-import useProfiles from './../hooks/useProfiles';
+import useProfile from '../hooks/useProfile';
 
 const UserPage = () => {
     const {
         loadingUser,
         userProfile,
         userError
-    } = useProfiles()
+    } = useProfile()
     
     return (
         <>

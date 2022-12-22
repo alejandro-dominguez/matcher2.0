@@ -8,22 +8,17 @@ import {
     FullScreenLoader
 } from '../components/';
 import { ErrorPage } from '../pages/';
-import useProfiles from './../hooks/useProfiles';
+import useProfile from '../hooks/useProfile';
+import useProfiles from '../hooks/useProfiles';
 
 const Feed = () => {
-    const {
-        loadingProfiles,
-        profiles,
-        profilesError,
-        loadingUser,
-        userProfile,
-        userError
-    } = useProfiles()
+    const { loadingUser, userError, userProfile } = useProfile()
+    const [ loadingProfiles, profilesError, profiles ] = useProfiles()
 
     return (
         <>
         {loadingProfiles || loadingUser ? <FullScreenLoader />
-        : !profilesError || !userError ? <div className='xlContainer'>
+        : profiles && userProfile && (!profilesError || !userError) ? <div className='xlContainer'>
             <div className="pageGradientBg flex flex-col-reverse md:flex md:flex-row items-center
             justify-center h-screen w-full relative overflow-hidden">
                 <div className="sideBarContainer md:block hidden">

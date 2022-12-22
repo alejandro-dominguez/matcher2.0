@@ -1,14 +1,11 @@
 import { FaUser, FaHeart } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { ErrorPage } from '../pages/';
-import useProfiles from '../hooks/useProfiles';
 import { FullScreenLoader } from '../components';
+import useProfiles from '../hooks/useProfile';
 
 const WelcomePage = () => {
     const {
-        loadingProfiles,
-        profilesError,
-        profiles,
         loadingUser,
         userError,
         userProfile
@@ -17,8 +14,8 @@ const WelcomePage = () => {
     
     return (
         <>
-        {loadingProfiles || loadingUser ? <FullScreenLoader />
-        : profiles && userProfile && !userError && !profilesError ? 
+        {loadingUser ? <FullScreenLoader />
+        : userProfile && !userError ? 
         <div className='h-screen w-full grid place-items-center'>
             <div className='grid place-items-center gap-6'>
                 <button type='button' className='welcomePageBtn' onClick={() => navigate("/app/feed")}>

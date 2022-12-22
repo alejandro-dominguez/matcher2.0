@@ -15,7 +15,7 @@ const UserSwiper = ({
     const [showModal, setShowModal] = useState(false)
     const [showUi, setShowUi] = useState(true)
     const [showBtn, setShowBtn] = useState(true)
-    const desc = shortenText(loggedUser.description, 110)
+    const desc = shortenText(loggedUser.description, 100)
     const name = shortenText(loggedUser.username, 16)
 
     const prevSlide = () => {
@@ -108,7 +108,7 @@ const UserSwiper = ({
                             </button>
                         </div>))
                         : null}
-                        <div className='w-[18.3rem] md:w-[20.05] aspect-[4/5] rounded-3xl pageGradientBg'/>
+                        <div className='w-[18.25rem] md:w-80 aspect-[4/5] rounded-3xl pageGradientBg'/>
                     </div>
                 </div>
                 <div className="w-80 h-[104px] bg-[#FFEAEA] rounded-lg hidden md:flex justify-between
